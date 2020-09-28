@@ -1,7 +1,6 @@
 package tdd_golang_test
 
 import (
-	"fmt"
 	"testing"
 
 	tdd_golang "github.com/supriyadi687/tdd-golang"
@@ -37,14 +36,21 @@ func TestShouldReturnSumGivenSumIntStringWithNewLine(t *testing.T) {
 
 func TestShouldReturnSumGivenDifferentDelimiters(t *testing.T) {
 	res, _ := tdd_golang.Add("//;\n1;3")
-	fmt.Print(res)
 	if res != 4 {
 		t.Errorf("expected to be 4 got %d", res)
 	}
 }
 
 func TestShouldHandleNegativeNumber(t *testing.T) {
-	res, _ := tdd_golang.Add("1,4,-1")
-	fmt.Print(res)
-	t.Errorf("negatives not allowed: %d", res)
+	_, err := tdd_golang.Add("1,4,-1")
+	if err == nil {
+		t.Errorf("expected error negative number")
+	}
+}
+
+func TestShouldIgnoreBigNumbers(t *testing.T) {
+	res, _ := tdd_golang.Add("2,1001")
+	if res != 2 {
+		t.Errorf("expected to be 2 got %d", res)
+	}
 }

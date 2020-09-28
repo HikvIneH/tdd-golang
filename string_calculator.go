@@ -1,6 +1,8 @@
 package tdd_golang
 
 import (
+	"errors"
+	"fmt"
 	"strconv"
 	"strings"
 )
@@ -13,7 +15,10 @@ func Add(input string) (int, error) {
 	for _, v := range s {
 		temp, _ = strconv.Atoi(v)
 		if temp < 0 {
-			return temp, nil
+			return 0, errors.New(fmt.Sprintf("negatives not allowed: %v", v))
+		}
+		if temp > 1000 {
+			temp = 0
 		}
 		n += temp
 	}
